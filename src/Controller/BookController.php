@@ -13,6 +13,10 @@ class BookController extends AbstractController
     #[Route('/book', name: 'app_book')]
     public function createBook(EntityManagerInterface $entityManager): JsonResponse
     {
+        $existingBooks = $entityManager->getRepository(Book::class)->findAll();
+
+        if (!empty($existingBooks)) {
+            return new JsonResponse('Books already exist in the database.');}
         
         $book = new Book();
         $book->setTitle('Harry Potter');

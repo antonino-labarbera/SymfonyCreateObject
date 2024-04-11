@@ -13,6 +13,10 @@ class AuthorController extends AbstractController
     #[Route('/author', name: 'app_author')]
     public function createAuthor(EntityManagerInterface $entityManager): JsonResponse
     {
+        $existingAuthors = $entityManager->getRepository(Author::class)->findAll();
+
+        if (!empty($existingAuthors)) {
+            return new JsonResponse('Authors already exist in the database.');}
 
         $author = new Author();
         $author->setName('J.K. Rowling');
@@ -24,6 +28,6 @@ class AuthorController extends AbstractController
         $entityManager->persist($author2);
         $entityManager->flush();
 
-        return new JsonResponse('Saved new authors with id '.$author->getId().$author2->getId());
+        return new JsonResponse('Saved new authors with id '.$author->getId().' '.$author2->getId());
     }
 }
