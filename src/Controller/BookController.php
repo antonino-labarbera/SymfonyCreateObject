@@ -13,28 +13,33 @@ class BookController extends AbstractController
     #[Route('/book', name: 'app_book')]
     public function createBook(EntityManagerInterface $entityManager): JsonResponse
     {
-        $existingBooks = $entityManager->getRepository(Book::class)->findAll();
+       
+        $csvFile = $this->getParameter('kernel.project_dir') .'/public/assets/books.csv';
 
-        if (!empty($existingBooks)) {
-            return new JsonResponse('Books already exist in the database.');}
+        $file = fopen($csvFile, 'r');
+        $booksData = [];
+
+        $keys = fgetcsv($file);
+
+        while(($data = fgetcsv($file)) !==false){
+            $rowData = [];
+            foreach ($keys as $index => $key) {
+                $rowData[$key] = $data[$index] ?? '';
+            }
+
+            $booksData[] = $rowData ;
+        }
+
+        fclose($file);
+
+
+        // $existingBooks = $entityManager->getRepository(Book::class)->findAll();
+
+        // if (!empty($existingBooks)) {
+        //     return new JsonResponse('Books already exist in the database.');}
         
-        $book = new Book();
-        $book->setTitle('Harry Potter');
-        $book->setDescription('A fantastic book');
-        $book->setPages(352);
-        $book->setAuthor('J.K. Rowling');
-
-        $book2 = new Book();
-        $book2->setTitle('1984');
-        $book2->setDescription('A famous distopian story');
-        $book2->setPages(328);
-        $book2->setAuthor('GeorgeOrwell');
-
-        $entityManager->persist($book);
-        $entityManager->persist($book2);
-
-        $entityManager->flush();
-
-        return new JsonResponse('Saved new books with id '.$book->getId().$book2->getId());
+        
+        return $this->json($booksData);
     }
 }
+
