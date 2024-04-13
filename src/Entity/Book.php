@@ -20,9 +20,6 @@ class Book
     #[ORM\Column]
     private ?string $pages = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $author = null;
-
     #[ORM\Column]
     private ?string $average_rating = null;
 
@@ -45,10 +42,15 @@ class Book
     private ?string $publication_date = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $publisher = null;
-
-    #[ORM\Column(length: 255)]
     private ?string $bookID = null;
+
+    #[ORM\ManyToOne(inversedBy: 'books')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?author $author = null;
+
+    #[ORM\ManyToOne(inversedBy: 'books')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?publisher $publisher = null;
 
     public function getId(): ?int
     {
@@ -76,18 +78,6 @@ class Book
     public function setPages(string $pages): static
     {
         $this->pages = $pages;
-
-        return $this;
-    }
-
-    public function getAuthor(): ?string
-    {
-        return $this->author;
-    }
-
-    public function setAuthor(string $author): static
-    {
-        $this->author = $author;
 
         return $this;
     }
@@ -176,18 +166,6 @@ class Book
         return $this;
     }
 
-    public function getPublisher(): ?string
-    {
-        return $this->publisher;
-    }
-
-    public function setPublisher(string $publisher): static
-    {
-        $this->publisher = $publisher;
-
-        return $this;
-    }
-
     public function getBookID(): ?string
     {
         return $this->bookID;
@@ -196,6 +174,30 @@ class Book
     public function setBookID(string $bookID): static
     {
         $this->bookID = $bookID;
+
+        return $this;
+    }
+
+    public function getAuthor(): ?author
+    {
+        return $this->author;
+    }
+
+    public function setAuthor(?author $author): static
+    {
+        $this->author = $author;
+
+        return $this;
+    }
+
+    public function getPublisher(): ?publisher
+    {
+        return $this->publisher;
+    }
+
+    public function setPublisher(?publisher $publisher): static
+    {
+        $this->publisher = $publisher;
 
         return $this;
     }
