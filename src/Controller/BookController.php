@@ -44,37 +44,29 @@ class BookController extends AbstractController
             $book->setPublicationDate($item['publication_date']); 
             $book->setBookID($item['bookID']); 
             
-            $author = new Author();
-            $author->setName($item['authors']);
+            $authorName = $item['authors'];
+            $author = $entityManager->getRepository(Author::class)->findOneBy(['name' => $authorName]);
+            if (!$author) {
+                $author = new Author();
+                $author->setName($authorName);
+                $entityManager->persist($author);
+            }
             $book->setAuthor($author);
 
-            $publisher = new Publisher();
-            $publisher->setName($item['publisher']);
+            $publisherName = $item['publisher'];
+            $publisher = $entityManager->getRepository(Publisher::class)->findOneBy(['name' => $publisherName]);
+            if (!$publisher) {
+                $publisher = new Publisher();
+                $publisher->setName($item['publisher']);
+                $entityManager->persist($publisher);
+            }
             $book->setPublisher($publisher);
             
-            $entityManager->persist($author);
-            $entityManager->persist($publisher);
             $entityManager->persist($book);
             $entityManager->flush();
-
-
-
-
-            
-            
-            
-            
-            
-            
-            
             
         }
-        // $existingBooks = $entityManager->getRepository(Book::class)->findAll();
         
-        // if (!empty($existingBooks)) {
-            //     return new JsonResponse('Books already exist in the database.');}
-            
-            
             return new JsonResponse('Books, authors and publisher correctly saved');
         }
     }
