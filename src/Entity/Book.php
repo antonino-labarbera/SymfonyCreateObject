@@ -38,7 +38,7 @@ class Book
     #[ORM\Column(length: 255)]
     private ?string $text_reviews_count = null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[ORM\Column(length: 255)]
     private ?string $publication_date = null;
 
     #[ORM\Column(length: 255)]
