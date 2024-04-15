@@ -18,10 +18,10 @@ class Book
     private ?string $title = null;
 
     #[ORM\Column]
-    private ?string $pages = null;
+    private ?int $pages = null;
 
     #[ORM\Column]
-    private ?string $average_rating = null;
+    private ?float $average_rating = null;
 
     #[ORM\Column(length: 20)]
     private ?string $isbn = null;
@@ -32,17 +32,14 @@ class Book
     #[ORM\Column(length: 20)]
     private ?string $leng = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $ratings_counts = null;
+    #[ORM\Column]
+    private ?int $ratings_counts = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $text_reviews_count = null;
+    #[ORM\Column]
+    private ?int $text_reviews_count = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $publication_date = null;
-
-    #[ORM\Column(length: 255)]
-    private ?string $bookID = null;
+    #[ORM\Column]
+    private ?int $bookID = null;
 
     #[ORM\ManyToOne(inversedBy: 'books')]
     #[ORM\JoinColumn(nullable: false)]
@@ -51,6 +48,9 @@ class Book
     #[ORM\ManyToOne(inversedBy: 'books')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Publisher $publisher = null;
+
+    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    private ?\DateTimeInterface $publicationDate = null;
 
     public function getId(): ?int
     {
@@ -70,24 +70,24 @@ class Book
     }
 
 
-    public function getPages(): ?string
+    public function getPages(): ?int
     {
         return $this->pages;
     }
 
-    public function setPages(string $pages): static
+    public function setPages(int $pages): static
     {
         $this->pages = $pages;
 
         return $this;
     }
 
-    public function getAverageRating(): ?string
+    public function getAverageRating(): ?float
     {
         return $this->average_rating;
     }
 
-    public function setAverageRating(string $average_rating): static
+    public function setAverageRating(float $average_rating): static
     {
         $this->average_rating = $average_rating;
 
@@ -130,48 +130,36 @@ class Book
         return $this;
     }
 
-    public function getRatingsCounts(): ?string
+    public function getRatingsCounts(): ?int
     {
         return $this->ratings_counts;
     }
 
-    public function setRatingsCounts(string $ratings_counts): static
+    public function setRatingsCounts(int $ratings_counts): static
     {
         $this->ratings_counts = $ratings_counts;
 
         return $this;
     }
 
-    public function getTextReviewsCount(): ?string
+    public function getTextReviewsCount(): ?int
     {
         return $this->text_reviews_count;
     }
 
-    public function setTextReviewsCount(string $text_reviews_count): static
+    public function setTextReviewsCount(int $text_reviews_count): static
     {
         $this->text_reviews_count = $text_reviews_count;
 
         return $this;
     }
 
-    public function getPublicationDate(): ?string
-    {
-        return $this->publication_date;
-    }
-
-    public function setPublicationDate(string $publication_date): static
-    {
-        $this->publication_date = $publication_date;
-
-        return $this;
-    }
-
-    public function getBookID(): ?string
+    public function getBookID(): ?int
     {
         return $this->bookID;
     }
 
-    public function setBookID(string $bookID): static
+    public function setBookID(int $bookID): static
     {
         $this->bookID = $bookID;
 
@@ -198,6 +186,18 @@ class Book
     public function setPublisher(?publisher $publisher): static
     {
         $this->publisher = $publisher;
+
+        return $this;
+    }
+
+    public function getPublicationDate(): ?\DateTimeInterface
+    {
+        return $this->publicationDate;
+    }
+
+    public function setPublicationDate(\DateTimeInterface $publicationDate): static
+    {
+        $this->publicationDate = $publicationDate;
 
         return $this;
     }

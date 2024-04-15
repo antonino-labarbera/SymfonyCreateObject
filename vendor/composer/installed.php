@@ -1,9 +1,9 @@
 <?php return array(
     'root' => array(
         'name' => '__root__',
-        'pretty_version' => 'dev-master',
-        'version' => 'dev-master',
-        'reference' => 'e18b9b4ed7960504180219d5e53328f7221a0da3',
+        'pretty_version' => 'dev-main',
+        'version' => 'dev-main',
+        'reference' => 'ee8e2d30de9ae19a8ee8dde38ede0c7d54b4cea9',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -11,11 +11,20 @@
     ),
     'versions' => array(
         '__root__' => array(
-            'pretty_version' => 'dev-master',
-            'version' => 'dev-master',
-            'reference' => 'e18b9b4ed7960504180219d5e53328f7221a0da3',
+            'pretty_version' => 'dev-main',
+            'version' => 'dev-main',
+            'reference' => 'ee8e2d30de9ae19a8ee8dde38ede0c7d54b4cea9',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+        'carbonphp/carbon-doctrine-types' => array(
+            'pretty_version' => '2.1.0',
+            'version' => '2.1.0.0',
+            'reference' => '99f76ffa36cce3b70a4a6abce41dba15ca2e84cb',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../carbonphp/carbon-doctrine-types',
             'aliases' => array(),
             'dev_requirement' => false,
         ),
@@ -145,6 +154,15 @@
             'aliases' => array(),
             'dev_requirement' => false,
         ),
+        'nesbot/carbon' => array(
+            'pretty_version' => '3.2.4',
+            'version' => '3.2.4.0',
+            'reference' => '82c28278c1c8f7b82dcdab25692237f052ffc8d8',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../nesbot/carbon',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
         'nikic/php-parser' => array(
             'pretty_version' => 'v5.0.2',
             'version' => '5.0.2.0',
@@ -167,6 +185,21 @@
             'dev_requirement' => false,
             'provided' => array(
                 0 => '2.0|3.0',
+            ),
+        ),
+        'psr/clock' => array(
+            'pretty_version' => '1.0.0',
+            'version' => '1.0.0.0',
+            'reference' => 'e41a24703d4560fd0acb709162f73b8adfc3aa0d',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../psr/clock',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+        'psr/clock-implementation' => array(
+            'dev_requirement' => false,
+            'provided' => array(
+                0 => '1.0',
             ),
         ),
         'psr/container' => array(
@@ -243,6 +276,15 @@
             'provided' => array(
                 0 => '1.1|2.0|3.0',
             ),
+        ),
+        'symfony/clock' => array(
+            'pretty_version' => 'v7.0.5',
+            'version' => '7.0.5.0',
+            'reference' => '8b9d08887353d627d5f6c3bf3373b398b49051c2',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../symfony/clock',
+            'aliases' => array(),
+            'dev_requirement' => false,
         ),
         'symfony/config' => array(
             'pretty_version' => 'v7.0.6',
@@ -537,6 +579,30 @@
             'install_path' => __DIR__ . '/../symfony/string',
             'aliases' => array(),
             'dev_requirement' => false,
+        ),
+        'symfony/translation' => array(
+            'pretty_version' => 'v7.0.4',
+            'version' => '7.0.4.0',
+            'reference' => '5b75e872f7d135d7abb4613809fadc8d9f3d30a0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../symfony/translation',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+        'symfony/translation-contracts' => array(
+            'pretty_version' => 'v3.4.2',
+            'version' => '3.4.2.0',
+            'reference' => '43810bdb2ddb5400e5c5e778e27b210a0ca83b6b',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../symfony/translation-contracts',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+        'symfony/translation-implementation' => array(
+            'dev_requirement' => false,
+            'provided' => array(
+                0 => '2.3|3.0',
+            ),
         ),
         'symfony/var-dumper' => array(
             'pretty_version' => 'v7.0.6',

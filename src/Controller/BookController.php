@@ -2,8 +2,9 @@
 
 namespace App\Controller;
 
-use App\Entity\Author;
+use Carbon\Carbon;
 use App\Entity\Book;
+use App\Entity\Author;
 use App\Entity\Publisher;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Routing\Attribute\Route;
@@ -32,16 +33,25 @@ class BookController extends AbstractController
 
         
         foreach ($booksData as $item) {
-            $book = new Book();
+            $isbn = $item['isbn'];
+            $book = $entityManager->getRepository(Book::class)->findOneBy(['isbn' => $isbn]);
+            if (!$book) {
+                $book = new Book();
+            }
             $book->setTitle($item['title']); 
-            $book->setPages($item['num_pages']); 
-            $book->setAverageRating($item['average_rating']); 
-            $book->setIsbn($item['isbn']);
+            $pages = settype($item['num_pages'], "int");
+            $book->setPages($pages); 
+            $rating = settype($item['average_rating'], "float");
+            $book->setAverageRating($rating); 
+            $book->setIsbn($isbn);
             $book->setIsbn13($item['isbn13']); 
             $book->setLeng($item['language_code']); 
-            $book->setRatingsCounts($item['ratings_count']); 
-            $book->setTextReviewsCount($item['text_reviews_count']); 
-            $book->setPublicationDate($item['publication_date']); 
+            $ratingCounts = settype($item['ratings_count'], "int");
+            $book->setRatingsCounts($ratingCounts); 
+            $reviewCounts = settype($item['text_reviews_count'], "int");
+            $book->setTextReviewsCount($reviewCounts); 
+            $date = Carbon::createFromFormat('m/d/Y', $item['publication_date']);
+            $book->setPublicationDate($date); 
             $book->setBookID($item['bookID']); 
             
             $authorName = $item['authors'];
@@ -50,6 +60,8 @@ class BookController extends AbstractController
                 $author = new Author();
                 $author->setName($authorName);
                 $entityManager->persist($author);
+            }else {
+                $author->setName($authorName);
             }
             $book->setAuthor($author);
 
@@ -59,6 +71,8 @@ class BookController extends AbstractController
                 $publisher = new Publisher();
                 $publisher->setName($item['publisher']);
                 $entityManager->persist($publisher);
+            }else {
+                $publisher->setName($publisherName);
             }
             $book->setPublisher($publisher);
             
