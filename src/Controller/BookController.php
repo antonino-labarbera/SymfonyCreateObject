@@ -39,20 +39,16 @@ class BookController extends AbstractController
                 $book = new Book();
             }
             $book->setTitle($item['title']); 
-            $pages = settype($item['num_pages'], "int");
-            $book->setPages($pages); 
-            $rating = settype($item['average_rating'], "float");
-            $book->setAverageRating($rating); 
+            $book->setPages((int) $item['num_pages']); 
+            $book->setAverageRating((float)$item['average_rating']); 
             $book->setIsbn($isbn);
             $book->setIsbn13($item['isbn13']); 
             $book->setLeng($item['language_code']); 
-            $ratingCounts = settype($item['ratings_count'], "int");
-            $book->setRatingsCounts($ratingCounts); 
-            $reviewCounts = settype($item['text_reviews_count'], "int");
-            $book->setTextReviewsCount($reviewCounts); 
+            $book->setRatingsCounts((int)$item['ratings_count']); 
+            $book->setTextReviewsCount((int)$item['text_reviews_count']); 
             $date = Carbon::createFromFormat('m/d/Y', $item['publication_date']);
             $book->setPublicationDate($date); 
-            $book->setBookID($item['bookID']); 
+            $book->setBookID((int)$item['bookID']); 
             
             $authorName = $item['authors'];
             $author = $entityManager->getRepository(Author::class)->findOneBy(['name' => $authorName]);
