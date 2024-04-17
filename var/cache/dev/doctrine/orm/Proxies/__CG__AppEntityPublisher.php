@@ -7,7 +7,7 @@ namespace Proxies\__CG__\App\Entity;
  */
 class Publisher extends \App\Entity\Publisher implements \Doctrine\ORM\Proxy\InternalProxy
 {
-    use \Symfony\Component\VarExporter\LazyGhostTrait {
+     use \Symfony\Component\VarExporter\LazyGhostTrait {
         initializeLazyObject as __load;
         setLazyObjectAsInitialized as public __setInitialized;
         isLazyObjectInitialized as private;
@@ -22,7 +22,7 @@ class Publisher extends \App\Entity\Publisher implements \Doctrine\ORM\Proxy\Int
         'books' => [parent::class, 'books', null],
         'id' => [parent::class, 'id', null],
         'name' => [parent::class, 'name', null],
-    ];
+    ];
 
     public function __isInitialized(): bool
     {
