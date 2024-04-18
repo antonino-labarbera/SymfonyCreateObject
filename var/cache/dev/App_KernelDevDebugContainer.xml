@@ -188,6 +188,23 @@
     </service>
     <service id="App\Service\BookService" class="App\Service\BookService" autowire="true" autoconfigure="true"/>
     <service id="App\Services\BookService" class="App\Services\BookService" autowire="true" autoconfigure="true"/>
+    <service id="App\Command\CreateBook" class="App\Command\CreateBook" autowire="true" autoconfigure="true">
+      <tag name="console.command"/>
+      <tag name="container.no_preload"/>
+      <argument type="service" id="doctrine.orm.default_entity_manager"/>
+      <argument type="service" id="App\Service\BookService"/>
+      <call method="setName">
+        <argument>app:create-book</argument>
+      </call>
+      <call method="setAliases">
+        <argument type="collection">
+          <argument>app:add-books</argument>
+        </argument>
+      </call>
+      <call method="setDescription">
+        <argument>Update books database.</argument>
+      </call>
+    </service>
     <service id="argument_metadata_factory" class="Symfony\Component\HttpKernel\ControllerMetadata\ArgumentMetadataFactory"/>
     <service id="argument_resolver.backed_enum_resolver" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\BackedEnumValueResolver">
       <tag priority="100" name="Symfony\Component\HttpKernel\Controller\ArgumentResolver\BackedEnumValueResolver">controller.argument_value_resolver</tag>
@@ -2693,6 +2710,8 @@
     <service id=".abstract.instanceof.App\Repository\BookRepository" class="App\Repository\BookRepository" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepositoryInterface.0.App\Repository\PublisherRepository" class="App\Repository\PublisherRepository" autowire="true" abstract="true"/>
     <service id=".abstract.instanceof.App\Repository\PublisherRepository" class="App\Repository\PublisherRepository" autowire="true" autoconfigure="true" abstract="true"/>
+    <service id=".instanceof.Symfony\Component\Console\Command\Command.0.App\Command\CreateBook" class="App\Command\CreateBook" autowire="true" abstract="true"/>
+    <service id=".abstract.instanceof.App\Command\CreateBook" class="App\Command\CreateBook" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".service_locator.bJ.4HC5" class="Symfony\Component\DependencyInjection\ServiceLocator">
       <tag name="container.service_locator"/>
       <argument type="collection">
@@ -3382,6 +3401,15 @@
     <service id=".errored..service_locator.y4_Zrx..Symfony\Component\Config\Loader\LoaderInterface" class="Symfony\Component\Config\Loader\LoaderInterface">
       <tag name="container.error" message="Cannot autowire service &quot;.service_locator.y4_Zrx.&quot;: it needs an instance of &quot;Symfony\Component\Config\Loader\LoaderInterface&quot; but this type has been excluded from autowiring."/>
     </service>
+    <service id=".App\Command\CreateBook.lazy" class="Symfony\Component\Console\Command\LazyCommand">
+      <argument>app:create-book</argument>
+      <argument type="collection">
+        <argument>app:add-books</argument>
+      </argument>
+      <argument>Update books database.</argument>
+      <argument>false</argument>
+      <argument type="service_closure" id="App\Command\CreateBook"/>
+    </service>
     <service id=".console.command.about.lazy" class="Symfony\Component\Console\Command\LazyCommand">
       <argument>about</argument>
       <argument type="collection"/>
@@ -3872,8 +3900,10 @@
     </service>
     <service id="console.command_loader" class="Symfony\Component\Console\CommandLoader\ContainerCommandLoader" public="true">
       <tag name="container.no_preload"/>
-      <argument type="service" id=".service_locator.qgx5KF5"/>
+      <argument type="service" id=".service_locator.MpKPCfp"/>
       <argument type="collection">
+        <argument key="app:create-book">App\Command\CreateBook</argument>
+        <argument key="app:add-books">App\Command\CreateBook</argument>
         <argument key="about">console.command.about</argument>
         <argument key="assets:install">console.command.assets_install</argument>
         <argument key="cache:clear">console.command.cache_clear</argument>
@@ -3964,9 +3994,10 @@
         <argument key="make:webhook">maker.auto_command.make_webhook</argument>
       </argument>
     </service>
-    <service id=".service_locator.qgx5KF5" class="Symfony\Component\DependencyInjection\ServiceLocator">
+    <service id=".service_locator.MpKPCfp" class="Symfony\Component\DependencyInjection\ServiceLocator">
       <tag name="container.service_locator"/>
       <argument type="collection">
+        <argument key="App\Command\CreateBook" type="service_closure" id=".App\Command\CreateBook.lazy"/>
         <argument key="Doctrine\DBAL\Tools\Console\Command\RunSqlCommand" type="service_closure" id="Doctrine\DBAL\Tools\Console\Command\RunSqlCommand"/>
         <argument key="console.command.about" type="service_closure" id=".console.command.about.lazy"/>
         <argument key="console.command.assets_install" type="service_closure" id=".console.command.assets_install.lazy"/>
