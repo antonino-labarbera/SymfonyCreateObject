@@ -5,9 +5,9 @@ namespace App\Service;
 
 class BookService{
     
-    public function readFile($csvFile){
+    public function readFile($excelFullPath){
         
-        $file = fopen($csvFile, 'r');
+        $file = fopen($excelFullPath, 'r');
         $booksData = [];
         $keys = fgetcsv($file);
         

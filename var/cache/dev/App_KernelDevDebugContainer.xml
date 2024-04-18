@@ -193,7 +193,6 @@
       <tag name="container.no_preload"/>
       <argument type="service" id="doctrine.orm.default_entity_manager"/>
       <argument type="service" id="App\Service\BookService"/>
-      <argument type="service" id="parameter_bag"/>
       <call method="setName">
         <argument>app:create-book</argument>
       </call>

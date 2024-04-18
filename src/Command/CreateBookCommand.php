@@ -10,9 +10,9 @@ use App\Service\BookService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Attribute\AsCommand;
+use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 #[AsCommand(
     name: 'app:create-book',
@@ -27,24 +27,27 @@ use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
     private $bookService;
     private $entityManager;
-    private $params;
 
-    public function __construct(EntityManagerInterface $entityManager, BookService $bookService, ParameterBagInterface $params){
+    public function __construct(EntityManagerInterface $entityManager, BookService $bookService){
 
         $this->entityManager = $entityManager;
         $this->bookService = $bookService;
-        $this->params = $params;
 
 
         parent::__construct();
     }
 
+    protected function configure(){
+        $this->addArgument('FilePath', InputArgument::REQUIRED);
+    }
+
+
     
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $csvFile = $this->params->get('kernel.project_dir') . '/public/assets/books.csv';
+        $excelFullPath = $input -> getArgument('FilePath');
 
-        $booksData = $this->bookService->readFile($csvFile);
+        $booksData = $this->bookService->readFile($excelFullPath);
 
 
         
