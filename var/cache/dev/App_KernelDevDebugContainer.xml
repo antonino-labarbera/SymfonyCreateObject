@@ -164,6 +164,9 @@
     <service id="App\Entity" class="App\Entity" abstract="true">
       <tag name="container.excluded" source="in &quot;config/services.yaml&quot;"/>
     </service>
+    <service id="App\Command\CreateBookCommand" class="App\Command\CreateBookCommand" autowire="true" autoconfigure="true">
+      <tag name="container.error" message="The autoloader expected class &quot;App\Command\CreateBookCommand&quot; to be defined in file &quot;C:\Users\tonil\wa\symfony\SymfonyCreateObject\vendor\composer/../../src\Command\CreateBookCommand.php&quot;. The file was found but the class was not in it, the class name or namespace probably has a typo."/>
+    </service>
     <service id="App\Controller\BookController" class="App\Controller\BookController" public="true" autowire="true" autoconfigure="true">
       <tag name="controller.service_arguments"/>
       <tag name="container.service_subscriber"/>
