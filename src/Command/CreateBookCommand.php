@@ -13,7 +13,12 @@ use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-#[AsCommand(name: 'app:create-book')]
+#[AsCommand(
+    name: 'app:create-book',
+    description: 'Update books database.',
+    hidden: false,
+    aliases: ['app:add-books']
+)]
 
  class CreateBook extends Command {
     
@@ -33,14 +38,14 @@ use Symfony\Component\Console\Output\OutputInterface;
     
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $csvFile = $this->getParameter('kernel.project_dir') .'/public/assets/books.csv';
-        $booksData = $bookService->readFile($csvFile);
+        $csvFile = $this->getApplication()('kernel.project_dir') .'/public/assets/books.csv';
+        $booksData = $this->bookService->readFile($csvFile);
 
 
         
         foreach ($booksData as $item) {
             $isbn = $item['isbn'];
-            $book = $entityManager->getRepository(Book::class)->findOneBy(['isbn' => $isbn]);
+            $book = $this->entityManager->getRepository(Book::class)->findOneBy(['isbn' => $isbn]);
             if (!$book) {
                 $book = new Book();
             }
@@ -57,32 +62,33 @@ use Symfony\Component\Console\Output\OutputInterface;
             $book->setBookID((int)$item['bookID']); 
             
             $authorName = $item['authors'];
-            $author = $entityManager->getRepository(Author::class)->findOneBy(['name' => $authorName]);
+            $author = $this->entityManager->getRepository(Author::class)->findOneBy(['name' => $authorName]);
             if (!$author) {
                 $author = new Author();
                 $author->setName($authorName);
-                $entityManager->persist($author);
+                $this->entityManager->persist($author);
             }else {
                 $author->setName($authorName);
             }
             $book->setAuthor($author);
 
             $publisherName = $item['publisher'];
-            $publisher = $entityManager->getRepository(Publisher::class)->findOneBy(['name' => $publisherName]);
+            $publisher = $this->entityManager->getRepository(Publisher::class)->findOneBy(['name' => $publisherName]);
             if (!$publisher) {
                 $publisher = new Publisher();
                 $publisher->setName($item['publisher']);
-                $entityManager->persist($publisher);
+                $this->entityManager->persist($publisher);
             }else {
                 $publisher->setName($publisherName);
             }
             $book->setPublisher($publisher);
             
-            $entityManager->persist($book);
-            $entityManager->flush();
+            $this->entityManager->persist($book);
+            $this->entityManager->flush();
             
         }
 
+        $output->writeln('Books updated');
         return Command::SUCCESS;
         
     }

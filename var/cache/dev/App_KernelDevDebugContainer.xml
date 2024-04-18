@@ -187,6 +187,7 @@
       <argument type="service" id="doctrine"/>
     </service>
     <service id="App\Service\BookService" class="App\Service\BookService" autowire="true" autoconfigure="true"/>
+    <service id="App\Services\BookService" class="App\Services\BookService" autowire="true" autoconfigure="true"/>
     <service id="argument_metadata_factory" class="Symfony\Component\HttpKernel\ControllerMetadata\ArgumentMetadataFactory"/>
     <service id="argument_resolver.backed_enum_resolver" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\BackedEnumValueResolver">
       <tag priority="100" name="Symfony\Component\HttpKernel\Controller\ArgumentResolver\BackedEnumValueResolver">controller.argument_value_resolver</tag>

@@ -23,4 +23,10 @@ services:
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
     App\Services\BookService: ~
+    App\Command\CreateBookCommand:
+        arguments:
+            $bookService: '@App\Service\BookService'
+            $entityManager: '@doctrine.orm.entity_manager'
+        tags:
+            - 'console.command'
         
