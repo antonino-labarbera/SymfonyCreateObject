@@ -12,6 +12,7 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 #[AsCommand(
     name: 'app:create-book',
@@ -26,11 +27,14 @@ use Symfony\Component\Console\Output\OutputInterface;
 
     private $bookService;
     private $entityManager;
+    private $params;
 
-    public function __construct(EntityManagerInterface $entityManager, BookService $bookService){
+    public function __construct(EntityManagerInterface $entityManager, BookService $bookService, ParameterBagInterface $params){
 
         $this->entityManager = $entityManager;
         $this->bookService = $bookService;
+        $this->params = $params;
+
 
         parent::__construct();
     }
@@ -38,7 +42,8 @@ use Symfony\Component\Console\Output\OutputInterface;
     
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $csvFile = $this->getApplication()('kernel.project_dir') .'/public/assets/books.csv';
+        $csvFile = $this->params->get('kernel.project_dir') . '/public/assets/books.csv';
+
         $booksData = $this->bookService->readFile($csvFile);
 
 
