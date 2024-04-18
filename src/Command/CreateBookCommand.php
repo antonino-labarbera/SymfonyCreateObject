@@ -30,11 +30,6 @@ use Symfony\Component\Console\Output\OutputInterface;
         parent::__construct();
     }
 
-    // protected function configure(){
-        
-    //     $this->setDescription('Create books fromCSV file.');
-    //     $this->setHelp('This command creates books from a CSV file.');
-    // }
     
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
