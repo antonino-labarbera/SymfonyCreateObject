@@ -81,11 +81,9 @@ use Symfony\Component\Console\Output\OutputInterface;
                     $book->setBookID((int)$item['bookID']); 
                     
                     $author = $this->getOrCreateEntity(Author::class, $item['authors']);
-                   
                     $book->setAuthor($author);
                     
                     $publisher = $this->getOrCreateEntity(Publisher::class, $item['publisher']);
-                    
                     $book->setPublisher($publisher);
                     
                     $this->entityManager->persist($author);
