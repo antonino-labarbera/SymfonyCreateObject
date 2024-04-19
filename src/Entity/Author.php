@@ -15,7 +15,7 @@ class Author
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 500)]
+    #[ORM\Column(length: 1000)]
     private ?string $name = null;
 
     /**
