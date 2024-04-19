@@ -19,6 +19,8 @@ class BookService{
             $booksData[] = $rowData ;
         }
         fclose($file);
-        return $booksData;
+        $batches = array_chunk($booksData, 1, true);
+
+        return $batches;
     }
 }
