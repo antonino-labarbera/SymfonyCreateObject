@@ -22,10 +22,10 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
-    App\Services\BookService: ~
-    App\Command\CreateBook:
+    App\Services\CsvFileReader: ~
+    App\Command\Books_Importer_command:
         arguments:
-            $bookService: '@App\Service\BookService'
+            $csvFile: '@App\Service\CsvFileReader'
             $entityManager: '@doctrine.orm.entity_manager'
         tags:
             - 'console.command'

@@ -164,8 +164,22 @@
     <service id="App\Entity" class="App\Entity" abstract="true">
       <tag name="container.excluded" source="in &quot;config/services.yaml&quot;"/>
     </service>
-    <service id="App\Command\CreateBookCommand" class="App\Command\CreateBookCommand" autowire="true" autoconfigure="true">
-      <tag name="container.error" message="The autoloader expected class &quot;App\Command\CreateBookCommand&quot; to be defined in file &quot;C:\Users\tonil\wa\symfony\SymfonyCreateObject\vendor\composer/../../src\Command\CreateBookCommand.php&quot;. The file was found but the class was not in it, the class name or namespace probably has a typo."/>
+    <service id="App\Command\Books_Importer_command" class="App\Command\Books_Importer_command" autowire="true" autoconfigure="true">
+      <tag name="console.command"/>
+      <tag name="container.no_preload"/>
+      <argument type="service" id="doctrine.orm.default_entity_manager"/>
+      <argument type="service" id="App\Service\CsvFileReader"/>
+      <call method="setName">
+        <argument>app:book_importer</argument>
+      </call>
+      <call method="setAliases">
+        <argument type="collection">
+          <argument>app:add-books</argument>
+        </argument>
+      </call>
+      <call method="setDescription">
+        <argument>Update books database.</argument>
+      </call>
     </service>
     <service id="App\Controller\BookController" class="App\Controller\BookController" public="true" autowire="true" autoconfigure="true">
       <tag name="controller.service_arguments"/>
@@ -186,25 +200,8 @@
       <tag name="doctrine.repository_service"/>
       <argument type="service" id="doctrine"/>
     </service>
-    <service id="App\Service\BookService" class="App\Service\BookService" autowire="true" autoconfigure="true"/>
-    <service id="App\Services\BookService" class="App\Services\BookService" autowire="true" autoconfigure="true"/>
-    <service id="App\Command\CreateBook" class="App\Command\CreateBook" autowire="true" autoconfigure="true">
-      <tag name="console.command"/>
-      <tag name="container.no_preload"/>
-      <argument type="service" id="doctrine.orm.default_entity_manager"/>
-      <argument type="service" id="App\Service\BookService"/>
-      <call method="setName">
-        <argument>app:create-book</argument>
-      </call>
-      <call method="setAliases">
-        <argument type="collection">
-          <argument>app:add-books</argument>
-        </argument>
-      </call>
-      <call method="setDescription">
-        <argument>Update books database.</argument>
-      </call>
-    </service>
+    <service id="App\Service\CsvFileReader" class="App\Service\CsvFileReader" autowire="true" autoconfigure="true"/>
+    <service id="App\Services\CsvFileReader" class="App\Services\CsvFileReader" autowire="true" autoconfigure="true"/>
     <service id="argument_metadata_factory" class="Symfony\Component\HttpKernel\ControllerMetadata\ArgumentMetadataFactory"/>
     <service id="argument_resolver.backed_enum_resolver" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\BackedEnumValueResolver">
       <tag priority="100" name="Symfony\Component\HttpKernel\Controller\ArgumentResolver\BackedEnumValueResolver">controller.argument_value_resolver</tag>
@@ -228,7 +225,7 @@
     </service>
     <service id="argument_resolver.service" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\ServiceValueResolver">
       <tag priority="-50" name="Symfony\Component\HttpKernel\Controller\ArgumentResolver\ServiceValueResolver">controller.argument_value_resolver</tag>
-      <argument type="service" id=".service_locator.HBJEHU7"/>
+      <argument type="service" id=".service_locator.ByHIGTt"/>
     </service>
     <service id="argument_resolver.default" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\DefaultValueResolver">
       <tag priority="-100" name="Symfony\Component\HttpKernel\Controller\ArgumentResolver\DefaultValueResolver">controller.argument_value_resolver</tag>
@@ -1638,7 +1635,7 @@
     </service>
     <service id="argument_resolver.not_tagged_controller" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\NotTaggedControllerValueResolver">
       <tag name="controller.argument_value_resolver" priority="-200"/>
-      <argument type="service" id=".service_locator.HBJEHU7"/>
+      <argument type="service" id=".service_locator.ByHIGTt"/>
     </service>
     <service id="routing.resolver" class="Symfony\Component\Config\Loader\LoaderResolver">
       <call method="addLoader">
@@ -2701,6 +2698,8 @@
       <argument type="service" id="maker.file_manager"/>
       <argument type="service" id="maker.generator"/>
     </service>
+    <service id=".instanceof.Symfony\Component\Console\Command\Command.0.App\Command\Books_Importer_command" class="App\Command\Books_Importer_command" autowire="true" abstract="true"/>
+    <service id=".abstract.instanceof.App\Command\Books_Importer_command" class="App\Command\Books_Importer_command" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.Symfony\Contracts\Service\ServiceSubscriberInterface.0.App\Controller\BookController" class="App\Controller\BookController" autowire="true" abstract="true"/>
     <service id=".instanceof.Symfony\Bundle\FrameworkBundle\Controller\AbstractController.0.App\Controller\BookController" class="App\Controller\BookController" autowire="true" abstract="true"/>
     <service id=".abstract.instanceof.App\Controller\BookController" class="App\Controller\BookController" autowire="true" autoconfigure="true" abstract="true"/>
@@ -2710,8 +2709,6 @@
     <service id=".abstract.instanceof.App\Repository\BookRepository" class="App\Repository\BookRepository" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepositoryInterface.0.App\Repository\PublisherRepository" class="App\Repository\PublisherRepository" autowire="true" abstract="true"/>
     <service id=".abstract.instanceof.App\Repository\PublisherRepository" class="App\Repository\PublisherRepository" autowire="true" autoconfigure="true" abstract="true"/>
-    <service id=".instanceof.Symfony\Component\Console\Command\Command.0.App\Command\CreateBook" class="App\Command\CreateBook" autowire="true" abstract="true"/>
-    <service id=".abstract.instanceof.App\Command\CreateBook" class="App\Command\CreateBook" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".service_locator.bJ.4HC5" class="Symfony\Component\DependencyInjection\ServiceLocator">
       <tag name="container.service_locator"/>
       <argument type="collection">
@@ -3121,22 +3118,25 @@
         <argument key="loader" type="service_closure" id=".errored..service_locator.y4_Zrx..Symfony\Component\Config\Loader\LoaderInterface"/>
       </argument>
     </service>
-    <service id=".service_locator.27Tc542" class="Symfony\Component\DependencyInjection\ServiceLocator">
+    <service id=".errored.WgGf7Xs" class="App\Service\BookService">
+      <tag name="container.error" message="Cannot determine controller argument for &quot;App\Controller\BookController::createBook()&quot;: the $bookService argument is type-hinted with the non-existent class or interface: &quot;App\Service\BookService&quot;."/>
+    </service>
+    <service id=".service_locator.mZkpFl8" class="Symfony\Component\DependencyInjection\ServiceLocator">
       <tag name="container.service_locator"/>
       <argument type="collection">
-        <argument key="bookService" type="service_closure" id="App\Service\BookService"/>
+        <argument key="bookService" type="service_closure" id=".errored.WgGf7Xs"/>
         <argument key="entityManager" type="service_closure" id="doctrine.orm.default_entity_manager"/>
       </argument>
     </service>
-    <service id=".service_locator.HBJEHU7" class="Symfony\Component\DependencyInjection\ServiceLocator">
+    <service id=".service_locator.ByHIGTt" class="Symfony\Component\DependencyInjection\ServiceLocator">
       <tag name="container.service_locator"/>
       <argument type="collection">
-        <argument key="App\Controller\BookController::createBook" type="service_closure" id=".service_locator.27Tc542"/>
+        <argument key="App\Controller\BookController::createBook" type="service_closure" id=".service_locator.mZkpFl8"/>
         <argument key="App\Kernel::loadRoutes" type="service_closure" id=".service_locator.y4_Zrx."/>
         <argument key="App\Kernel::registerContainerConfiguration" type="service_closure" id=".service_locator.y4_Zrx."/>
         <argument key="kernel::loadRoutes" type="service_closure" id=".service_locator.y4_Zrx."/>
         <argument key="kernel::registerContainerConfiguration" type="service_closure" id=".service_locator.y4_Zrx."/>
-        <argument key="App\Controller\BookController:createBook" type="service_closure" id=".service_locator.27Tc542"/>
+        <argument key="App\Controller\BookController:createBook" type="service_closure" id=".service_locator.mZkpFl8"/>
         <argument key="kernel:loadRoutes" type="service_closure" id=".service_locator.y4_Zrx."/>
         <argument key="kernel:registerContainerConfiguration" type="service_closure" id=".service_locator.y4_Zrx."/>
       </argument>
@@ -3401,14 +3401,14 @@
     <service id=".errored..service_locator.y4_Zrx..Symfony\Component\Config\Loader\LoaderInterface" class="Symfony\Component\Config\Loader\LoaderInterface">
       <tag name="container.error" message="Cannot autowire service &quot;.service_locator.y4_Zrx.&quot;: it needs an instance of &quot;Symfony\Component\Config\Loader\LoaderInterface&quot; but this type has been excluded from autowiring."/>
     </service>
-    <service id=".App\Command\CreateBook.lazy" class="Symfony\Component\Console\Command\LazyCommand">
-      <argument>app:create-book</argument>
+    <service id=".App\Command\Books_Importer_command.lazy" class="Symfony\Component\Console\Command\LazyCommand">
+      <argument>app:book_importer</argument>
       <argument type="collection">
         <argument>app:add-books</argument>
       </argument>
       <argument>Update books database.</argument>
       <argument>false</argument>
-      <argument type="service_closure" id="App\Command\CreateBook"/>
+      <argument type="service_closure" id="App\Command\Books_Importer_command"/>
     </service>
     <service id=".console.command.about.lazy" class="Symfony\Component\Console\Command\LazyCommand">
       <argument>about</argument>
@@ -3900,10 +3900,10 @@
     </service>
     <service id="console.command_loader" class="Symfony\Component\Console\CommandLoader\ContainerCommandLoader" public="true">
       <tag name="container.no_preload"/>
-      <argument type="service" id=".service_locator.MpKPCfp"/>
+      <argument type="service" id=".service_locator.hHo2ikx"/>
       <argument type="collection">
-        <argument key="app:create-book">App\Command\CreateBook</argument>
-        <argument key="app:add-books">App\Command\CreateBook</argument>
+        <argument key="app:book_importer">App\Command\Books_Importer_command</argument>
+        <argument key="app:add-books">App\Command\Books_Importer_command</argument>
         <argument key="about">console.command.about</argument>
         <argument key="assets:install">console.command.assets_install</argument>
         <argument key="cache:clear">console.command.cache_clear</argument>
@@ -3994,10 +3994,10 @@
         <argument key="make:webhook">maker.auto_command.make_webhook</argument>
       </argument>
     </service>
-    <service id=".service_locator.MpKPCfp" class="Symfony\Component\DependencyInjection\ServiceLocator">
+    <service id=".service_locator.hHo2ikx" class="Symfony\Component\DependencyInjection\ServiceLocator">
       <tag name="container.service_locator"/>
       <argument type="collection">
-        <argument key="App\Command\CreateBook" type="service_closure" id=".App\Command\CreateBook.lazy"/>
+        <argument key="App\Command\Books_Importer_command" type="service_closure" id=".App\Command\Books_Importer_command.lazy"/>
         <argument key="Doctrine\DBAL\Tools\Console\Command\RunSqlCommand" type="service_closure" id="Doctrine\DBAL\Tools\Console\Command\RunSqlCommand"/>
         <argument key="console.command.about" type="service_closure" id=".console.command.about.lazy"/>
         <argument key="console.command.assets_install" type="service_closure" id=".console.command.assets_install.lazy"/>
@@ -4149,7 +4149,7 @@
     <service id="doctrine.orm.default_entity_manager.event_manager" alias="doctrine.dbal.default_connection.event_manager"/>
     <service id="doctrine.migrations.metadata_storage" alias="doctrine.migrations.storage.table_storage"/>
     <service id="container.env_var_processors_locator" alias=".service_locator.bJ.4HC5" public="true"/>
-    <service id="argument_resolver.controller_locator" alias=".service_locator.HBJEHU7"/>
+    <service id="argument_resolver.controller_locator" alias=".service_locator.ByHIGTt"/>
     <service id="doctrine.id_generator_locator" alias=".service_locator.KLVvNIq"/>
     <service id="Psr\Log\LoggerInterface" alias="logger"/>
     <service id="event_dispatcher" alias="debug.event_dispatcher" public="true"/>
@@ -4157,7 +4157,7 @@
     <service id="argument_resolver" alias="debug.argument_resolver"/>
     <service id="doctrine.orm.default_metadata_driver" alias=".doctrine.orm.default_metadata_driver"/>
     <service id=".service_locator.gFlme_s" alias=".service_locator.y4_Zrx."/>
-    <service id=".service_locator.7xtNtQj" alias=".service_locator.27Tc542"/>
+    <service id=".service_locator.omqPg7E" alias=".service_locator.mZkpFl8"/>
     <service id=".service_locator.KL3pAWR" alias=".service_locator.jUv.zyj"/>
   </services>
 </container>
