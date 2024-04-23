@@ -47,7 +47,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 
             if(!$entity){
                 $entity = new $className();
-                $entity->setName($value);
             }
             return $entity;
         }

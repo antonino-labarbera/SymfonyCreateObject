@@ -41,11 +41,11 @@ class Book
     #[ORM\Column]
     private ?int $bookID = null;
 
-    #[ORM\ManyToOne(inversedBy: 'books')]
+    #[ORM\ManyToOne(fetch: 'EAGER',cascade: ["persist"], inversedBy: 'books')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Author $author = null;
 
-    #[ORM\ManyToOne(inversedBy: 'books')]
+    #[ORM\ManyToOne(fetch: 'EAGER',cascade: ["persist"], inversedBy: 'books')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Publisher $publisher = null;
 

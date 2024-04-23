@@ -4,6 +4,10 @@
 
 return [
     '_preview_error' => [['code', '_format'], ['_controller' => 'error_controller::preview', '_format' => 'html'], ['code' => '\\d+'], [['variable', '.', '[^/]++', '_format', true], ['variable', '/', '\\d+', 'code', true], ['text', '/_error']], [], [], []],
-    'app_book' => [[], ['_controller' => 'App\\Controller\\BookController::createBook'], [], [['text', '/book']], [], [], []],
-    'App\Controller\BookController::createBook' => [[], ['_controller' => 'App\\Controller\\BookController::createBook'], [], [['text', '/book']], [], [], []],
+    'app_author' => [[], ['_controller' => 'App\\Controller\\AuthorController::showAuthors'], [], [['text', '/author']], [], [], []],
+    'app_book' => [[], ['_controller' => 'App\\Controller\\BookController::showBooks'], [], [['text', '/books']], [], [], []],
+    'app_publisher' => [[], ['_controller' => 'App\\Controller\\PublisherController::showPublishers'], [], [['text', '/publisher']], [], [], []],
+    'App\Controller\AuthorController::showAuthors' => [[], ['_controller' => 'App\\Controller\\AuthorController::showAuthors'], [], [['text', '/author']], [], [], []],
+    'App\Controller\BookController::showBooks' => [[], ['_controller' => 'App\\Controller\\BookController::showBooks'], [], [['text', '/books']], [], [], []],
+    'App\Controller\PublisherController::showPublishers' => [[], ['_controller' => 'App\\Controller\\PublisherController::showPublishers'], [], [['text', '/publisher']], [], [], []],
 ];

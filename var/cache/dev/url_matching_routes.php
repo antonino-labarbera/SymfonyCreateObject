@@ -10,7 +10,7 @@ return [
     [ // $staticRoutes
         '/author' => [[['_route' => 'app_author', '_controller' => 'App\\Controller\\AuthorController::showAuthors'], null, null, null, false, false, null]],
         '/books' => [[['_route' => 'app_book', '_controller' => 'App\\Controller\\BookController::showBooks'], null, null, null, false, false, null]],
-        '/publisher' => [[['_route' => 'app_publisher', '_controller' => 'App\\Controller\\PublisherController::index'], null, null, null, false, false, null]],
+        '/publisher' => [[['_route' => 'app_publisher', '_controller' => 'App\\Controller\\PublisherController::showPublishers'], null, null, null, false, false, null]],
     ],
     [ // $regexpList
         0 => '{^(?'
