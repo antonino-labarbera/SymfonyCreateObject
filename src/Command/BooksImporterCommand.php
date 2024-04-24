@@ -81,6 +81,7 @@ class BooksImporterCommand extends Command
             }
 
             foreach ($data as $dataBook) {
+
                 $this->bookImporter->importData($dataBook);
             }
 

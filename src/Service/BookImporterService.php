@@ -9,6 +9,7 @@ use App\Entity\Publisher;
 use App\Utils\ImporterUtils;
 use Psr\Log\LoggerInterface;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
  * Class BookImporterService
@@ -122,5 +123,6 @@ class BookImporterService
         }
         $this->entityManager->persist($book);
         $this->entityManager->flush();
+       
     }
 }

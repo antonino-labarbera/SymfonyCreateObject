@@ -41,8 +41,7 @@ class CsvFileReader{
             }
         }
         fclose($file);
-        $dataSets = array_chunk($booksData, 1, true);
         }
-        return $dataSets;
+        return $booksData;
     }
 }
