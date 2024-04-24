@@ -8,11 +8,9 @@
 return [
     false, // $matchHost
     [ // $staticRoutes
-        '/author' => [[['_route' => 'app_author', '_controller' => 'App\\Controller\\AuthorController::showAuthors'], null, null, null, false, false, null]],
         '/books' => [[['_route' => 'app_book', '_controller' => 'App\\Controller\\FetchEntityController::fetchBooks'], null, null, null, false, false, null]],
         '/authors' => [[['_route' => 'app_authors', '_controller' => 'App\\Controller\\FetchEntityController::fetchAuthors'], null, null, null, false, false, null]],
         '/publishers' => [[['_route' => 'app_publishers', '_controller' => 'App\\Controller\\FetchEntityController::fetchPublishers'], null, null, null, false, false, null]],
-        '/publisher' => [[['_route' => 'app_publisher', '_controller' => 'App\\Controller\\PublisherController::showPublishers'], null, null, null, false, false, null]],
     ],
     [ // $regexpList
         0 => '{^(?'

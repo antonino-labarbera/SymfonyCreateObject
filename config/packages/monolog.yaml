@@ -2,19 +2,6 @@ monolog:
     channels:
         - deprecation # Deprecations are logged in the dedicated "deprecation" channel when it exists
 
-monolog:
-    handlers:
-        main:
-            type: stream
-            path: "%kernel.logs_dir%/%kernel.environment%.log"
-            level: debug
-            channels: ["!event", "!doctrine", "!console"]
-
-            # Log rotation settings
-            max_files: 7  # Maximum number of log files to keep
-            rotate:  'week'  # Rotate logs weekly
-            compress: true  # Compress rotated log files
-
 when@dev:
     monolog:
         handlers:
@@ -73,5 +60,3 @@ when@prod:
                 channels: [deprecation]
                 path: php://stderr
                 formatter: monolog.formatter.json
-
-

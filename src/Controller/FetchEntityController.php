@@ -11,16 +11,30 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
+/**
+ * Class FetchEntityController
+ * @package App\Controller
+ */
 class FetchEntityController extends AbstractController
 {
-
+    /**
+     * @var EntityManagerInterface
+     */
     private $entityManager;
 
-    public function __construct(EntityManagerInterface $entityManager){
+    /**
+     * FetchEntityController constructor.
+     * @param EntityManagerInterface $entityManager
+     */
+    public function __construct(EntityManagerInterface $entityManager)
+    {
        $this->entityManager = $entityManager;
     }
-    
-    const BOOK_ARRAY_MAPPING = [
+
+    /**
+     * Array mapping for the Book entity.
+     */
+    private const BOOK_ARRAY_MAPPING = [
         "id" =>"getId",
         "title" => "getTitle",
         "pages" => "getPages",
@@ -36,12 +50,22 @@ class FetchEntityController extends AbstractController
         "publicationDate" => "getPublicationDate",
     ];
 
-    const AUTHOR_PUBLISHER_ARRAY_MAPPING = [
+    /**
+     * Array mapping for the Author and Publisher entities.
+     */
+    private const AUTHOR_PUBLISHER_ARRAY_MAPPING = [
         "id" => "getId",
         "name" => "getName",
         "books" => "getBooks",
     ];
 
+    /**
+     * Fetches entities based on the provided entity class and mapping.
+     *
+     * @param string $entityClass The entity class name
+     * @param array $entityMapping The array mapping for the entity
+     * @return array The fetched entities
+     */
     private function fetchEntities(string $entityClass, array $entityMapping): array {
             $entities = $this->entityManager->getRepository($entityClass)->findBy([], ['id' => 'ASC']);
 
@@ -56,6 +80,12 @@ class FetchEntityController extends AbstractController
             return $entityList;
         }
 
+    /**
+     * Retrieves and displays a list of books.
+     *
+     * @Route('/books', name="app_book")
+     * @return JsonResponse
+     */
     #[Route('/books', name: 'app_book')]
     public function fetchBooks(): JsonResponse
     {
@@ -73,7 +103,13 @@ class FetchEntityController extends AbstractController
         }
         return $this->json($books);
     }  
-
+    
+    /**
+     * Retrieves and displays a list of authors with their related books.
+     *
+     * @Route('/authors', name="app_authors")
+     * @return JsonResponse
+     */
     #[Route('/authors', name: 'app_authors')]
     public function fetchAuthors(): JsonResponse
     {
@@ -91,7 +127,13 @@ class FetchEntityController extends AbstractController
         }
         return $this->json($authors);
     }  
-
+    
+     /**
+     * Retrieves and displays a list of publishers with their related books.
+     *
+     * @Route('/publishers', name="app_publishers")
+     * @return JsonResponse
+     */
     #[Route('/publishers', name: 'app_publishers')]
     public function fetchPublishers(): JsonResponse
     {

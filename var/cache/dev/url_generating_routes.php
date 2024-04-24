@@ -4,10 +4,10 @@
 
 return [
     '_preview_error' => [['code', '_format'], ['_controller' => 'error_controller::preview', '_format' => 'html'], ['code' => '\\d+'], [['variable', '.', '[^/]++', '_format', true], ['variable', '/', '\\d+', 'code', true], ['text', '/_error']], [], [], []],
-    'app_author' => [[], ['_controller' => 'App\\Controller\\AuthorController::showAuthors'], [], [['text', '/author']], [], [], []],
-    'app_book' => [[], ['_controller' => 'App\\Controller\\BookController::showBooks'], [], [['text', '/books']], [], [], []],
-    'app_publisher' => [[], ['_controller' => 'App\\Controller\\PublisherController::showPublishers'], [], [['text', '/publisher']], [], [], []],
-    'App\Controller\AuthorController::showAuthors' => [[], ['_controller' => 'App\\Controller\\AuthorController::showAuthors'], [], [['text', '/author']], [], [], []],
-    'App\Controller\BookController::showBooks' => [[], ['_controller' => 'App\\Controller\\BookController::showBooks'], [], [['text', '/books']], [], [], []],
-    'App\Controller\PublisherController::showPublishers' => [[], ['_controller' => 'App\\Controller\\PublisherController::showPublishers'], [], [['text', '/publisher']], [], [], []],
+    'app_book' => [[], ['_controller' => 'App\\Controller\\FetchEntityController::fetchBooks'], [], [['text', '/books']], [], [], []],
+    'app_authors' => [[], ['_controller' => 'App\\Controller\\FetchEntityController::fetchAuthors'], [], [['text', '/authors']], [], [], []],
+    'app_publishers' => [[], ['_controller' => 'App\\Controller\\FetchEntityController::fetchPublishers'], [], [['text', '/publishers']], [], [], []],
+    'App\Controller\FetchEntityController::fetchBooks' => [[], ['_controller' => 'App\\Controller\\FetchEntityController::fetchBooks'], [], [['text', '/books']], [], [], []],
+    'App\Controller\FetchEntityController::fetchAuthors' => [[], ['_controller' => 'App\\Controller\\FetchEntityController::fetchAuthors'], [], [['text', '/authors']], [], [], []],
+    'App\Controller\FetchEntityController::fetchPublishers' => [[], ['_controller' => 'App\\Controller\\FetchEntityController::fetchPublishers'], [], [['text', '/publishers']], [], [], []],
 ];
