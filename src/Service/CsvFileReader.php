@@ -16,22 +16,33 @@ class CsvFileReader{
      *
      * @return array An array containing data sets extracted from the CSV file.
      */
-    public function readFile($excelFullPath){
-        
-        $file = fopen($excelFullPath, 'r');
+    public function readFile($csvFullPath): array{
         $booksData = [];
-        $keys = fgetcsv($file);
+        
+        if(($file = fopen($csvFullPath, 'r')) !== false){
+        $columns = fgetcsv($file);
+        
+        foreach ($columns as $column) {
+            $column = mb_strtolower(trim($column));
+        }
         
         while(($data = fgetcsv($file)) !==false){
             $rowData = [];
-            foreach ($keys as $index => $key) {
-                $rowData[$key] = $data[$index] ?? '';
+            foreach ($data as $key => $value) {
+                if(isset($columns[$key])){
+                    
+                    $rowData[$columns[$key]] = trim($value);
+            
+                    
+                }
             }
-            $booksData[] = $rowData ;
+            if(!empty($rowData)){
+                $booksData[] = $rowData ;
+            }
         }
         fclose($file);
         $dataSets = array_chunk($booksData, 1, true);
-
+        }
         return $dataSets;
     }
 }
