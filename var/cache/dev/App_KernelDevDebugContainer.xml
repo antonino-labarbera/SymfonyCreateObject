@@ -213,12 +213,12 @@
         <argument type="service" id=".service_locator.jUv.zyj.App\Controller\AuthorController"/>
       </call>
     </service>
-    <service id="App\Controller\BookController" class="App\Controller\BookController" public="true" autowire="true" autoconfigure="true">
+    <service id="App\Controller\FetchEntityController" class="App\Controller\FetchEntityController" public="true" autowire="true" autoconfigure="true">
       <tag name="controller.service_arguments"/>
       <tag name="container.service_subscriber"/>
       <argument type="service" id="doctrine.orm.default_entity_manager"/>
       <call method="setContainer">
-        <argument type="service" id=".service_locator.jUv.zyj.App\Controller\BookController"/>
+        <argument type="service" id=".service_locator.jUv.zyj.App\Controller\FetchEntityController"/>
       </call>
     </service>
     <service id="App\Controller\PublisherController" class="App\Controller\PublisherController" public="true" autowire="true" autoconfigure="true">
@@ -3072,9 +3072,9 @@
     <service id=".instanceof.Symfony\Contracts\Service\ServiceSubscriberInterface.0.App\Controller\AuthorController" class="App\Controller\AuthorController" autowire="true" abstract="true"/>
     <service id=".instanceof.Symfony\Bundle\FrameworkBundle\Controller\AbstractController.0.App\Controller\AuthorController" class="App\Controller\AuthorController" autowire="true" abstract="true"/>
     <service id=".abstract.instanceof.App\Controller\AuthorController" class="App\Controller\AuthorController" autowire="true" autoconfigure="true" abstract="true"/>
-    <service id=".instanceof.Symfony\Contracts\Service\ServiceSubscriberInterface.0.App\Controller\BookController" class="App\Controller\BookController" autowire="true" abstract="true"/>
-    <service id=".instanceof.Symfony\Bundle\FrameworkBundle\Controller\AbstractController.0.App\Controller\BookController" class="App\Controller\BookController" autowire="true" abstract="true"/>
-    <service id=".abstract.instanceof.App\Controller\BookController" class="App\Controller\BookController" autowire="true" autoconfigure="true" abstract="true"/>
+    <service id=".instanceof.Symfony\Contracts\Service\ServiceSubscriberInterface.0.App\Controller\FetchEntityController" class="App\Controller\FetchEntityController" autowire="true" abstract="true"/>
+    <service id=".instanceof.Symfony\Bundle\FrameworkBundle\Controller\AbstractController.0.App\Controller\FetchEntityController" class="App\Controller\FetchEntityController" autowire="true" abstract="true"/>
+    <service id=".abstract.instanceof.App\Controller\FetchEntityController" class="App\Controller\FetchEntityController" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.Symfony\Contracts\Service\ServiceSubscriberInterface.0.App\Controller\PublisherController" class="App\Controller\PublisherController" autowire="true" abstract="true"/>
     <service id=".instanceof.Symfony\Bundle\FrameworkBundle\Controller\AbstractController.0.App\Controller\PublisherController" class="App\Controller\PublisherController" autowire="true" abstract="true"/>
     <service id=".abstract.instanceof.App\Controller\PublisherController" class="App\Controller\PublisherController" autowire="true" autoconfigure="true" abstract="true"/>
@@ -3713,9 +3713,9 @@
       <argument type="service" id="service_container"/>
       <factory service=".service_locator.jUv.zyj" method="withContext"/>
     </service>
-    <service id=".service_locator.jUv.zyj.App\Controller\BookController" class="Symfony\Component\DependencyInjection\ServiceLocator">
-      <tag name="container.service_locator_context" id="App\Controller\BookController"/>
-      <argument>App\Controller\BookController</argument>
+    <service id=".service_locator.jUv.zyj.App\Controller\FetchEntityController" class="Symfony\Component\DependencyInjection\ServiceLocator">
+      <tag name="container.service_locator_context" id="App\Controller\FetchEntityController"/>
+      <argument>App\Controller\FetchEntityController</argument>
       <argument type="service" id="service_container"/>
       <factory service=".service_locator.jUv.zyj" method="withContext"/>
     </service>
@@ -3827,7 +3827,7 @@
         <argument type="collection">
           <argument>App\Kernel</argument>
           <argument>App\Controller\AuthorController</argument>
-          <argument>App\Controller\BookController</argument>
+          <argument>App\Controller\FetchEntityController</argument>
           <argument>App\Controller\PublisherController</argument>
           <argument>Doctrine\Bundle\DoctrineBundle\Controller\ProfilerController</argument>
         </argument>
