@@ -28,12 +28,12 @@ class BookImporterService
     const BOOK_ARRAY_MAPPING = [
         "title" => "setTitle",
         "pages" => "setPages",
-        "average_rating" => "setAverageRating",
+        "rating" => "setRating",
         "isbn" => "setIsbn",
         "isbn13" => "setIsbn13",
         "leng" => "setLeng",
-        "ratings_counts" => "setRatingsCounts",
-        "text_reviews_count" => "setTextReviewsCount",
+        "ratings_score" => "setRatingsScore",
+        "text_reviews" => "setTextReviews",
         "bookID" => "setBookID",
         "author" => "setAuthor",
         "publisher" => "setPublisher",
@@ -84,7 +84,7 @@ class BookImporterService
     {
         switch ($key) {
             case "pages":
-            case "ratings_counts":
+            case "ratings_score":
             case "text_reviews_count":
             case "bookID":
                 return (int) $value;
