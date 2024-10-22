@@ -21,7 +21,7 @@ class Book
     private ?int $pages = null;
 
     #[ORM\Column]
-    private ?float $average_rating = null;
+    private ?float $rating = null;
 
     #[ORM\Column(length: 20)]
     private ?string $isbn = null;
@@ -33,10 +33,10 @@ class Book
     private ?string $leng = null;
 
     #[ORM\Column]
-    private ?int $ratings_counts = null;
+    private ?int $ratings_score = null;
 
     #[ORM\Column]
-    private ?int $text_reviews_count = null;
+    private ?int $text_reviews = null;
 
     #[ORM\Column]
     private ?int $bookID = null;
@@ -82,14 +82,14 @@ class Book
         return $this;
     }
 
-    public function getAverageRating(): ?float
+    public function getRating(): ?float
     {
-        return $this->average_rating;
+        return $this->rating;
     }
 
-    public function setAverageRating(float $average_rating): static
+    public function setRating(float $rating): static
     {
-        $this->average_rating = $average_rating;
+        $this->rating = $rating;
 
         return $this;
     }
@@ -130,26 +130,26 @@ class Book
         return $this;
     }
 
-    public function getRatingsCounts(): ?int
+    public function getRatingsScore(): ?int
     {
-        return $this->ratings_counts;
+        return $this->ratings_score;
     }
 
-    public function setRatingsCounts(int $ratings_counts): static
+    public function setRatingsScore(int $ratings_score): static
     {
-        $this->ratings_counts = $ratings_counts;
+        $this->ratingsScore = $ratings_score;
 
         return $this;
     }
 
-    public function getTextReviewsCount(): ?int
+    public function getTextReviews(): ?int
     {
-        return $this->text_reviews_count;
+        return $this->text_reviews;
     }
 
-    public function setTextReviewsCount(int $text_reviews_count): static
+    public function setTextReviews(int $text_reviews): static
     {
-        $this->text_reviews_count = $text_reviews_count;
+        $this->text_reviews = $text_reviews;
 
         return $this;
     }
